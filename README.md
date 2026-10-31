@@ -2,71 +2,90 @@
 
 **Azeroth can wait. Dad duty can't.**
 
-A tiny, lighthearted World of Warcraft: Forever addon for players who have kids, partners, pets, doorbells and other unavoidable real-life raid bosses.
+A lightweight, deliberately ridiculous **World of Warcraft: Forever** addon for busy dads, gamers and every parent interrupted by a real-life boss fight. Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
 
-Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
+**Current build: v1.0.0-beta.1.** The files are in the repository, but in-game compatibility remains to be tested before a CurseForge release.
 
-## Version
+## Your 12 real-life boss fights
 
-**0.1.1-alpha** - first playable build for WoW Forever beta (interface `16001`). In-game testing is still required.
+| Button | Slash command | Comeback |
+| --- | --- | --- |
+| Kid Aggro | /fafk kid | Dad survived Kid Aggro. Bedtime boss defeated. |
+| Partner Aggro | /fafk partner | Partner raid cleared. Relationship reputation +10. |
+| Pet Emergency | /fafk pet | Pet escort quest complete. Paw patrol survived. |
+| Toilet Raid | /fafk toilet | Dad survived the Toilet Raid. No loot dropped. |
+| Phone Aggro | /fafk phone | Phone boss defeated. Battery -5. Sanity -20. |
+| Snack Quest | /fafk snack | Snack quest complete. Inventory replenished. |
+| Doorbell Pull | /fafk doorbell | Doorbell boss handled. Unexpected NPC despawned. |
+| Sleep Debuff | /fafk sleep | Sleep debuff dispelled. Dad is operational. |
+| Work Aggro | /fafk work | Work aggro evaded. Back to the real endgame. |
+| Coffee Refill | /fafk coffee | Coffee potion consumed. Mana restored +100. |
+| Delivery Boss | /fafk delivery | Delivery boss down. Package looted. |
+| Dad Tech Support | /fafk tech | Wi-Fi boss defeated. Family reputation restored +100. |
 
-## What it does
+Every reason starts an AFK timer and sets an in-game AFK message. When grouped and not silent, the addon attempts one group announcement. The **I'M BACK** button clears AFK and attempts a reason-specific comeback including elapsed time.
 
-- Seven one-click reasons: **Kid Aggro**, **Partner Aggro**, **Pet Emergency**, **Toilet Raid**, **Phone Aggro**, **Snack Quest**, and **Doorbell Pull**.
-- Sets your actual in-game AFK message using the modern `C_ChatInfo.SendChatMessage` API.
-- Posts a short, fun message to **instance, raid or party chat** when you're grouped, when the client permits it. Does **not** broadcast to /say or /guild while solo.
-- Starts a local elapsed-time timer that persists through `/reload`.
-- **I'M BACK** clears your AFK message and sends a single return announcement to your current group.
-- Small draggable dark-and-gold interface; window position saved between sessions.
-- All messages are initiated by clicks or explicit slash commands. No anti-AFK automation and no background chat spam.
+## Features
 
-## Install (WoW Forever beta)
+- **12 large, one-click buttons**, displayed as a compact 2 × 6 grid.
+- **Minimap button**: left-click opens/closes, right-click toggles Silent Mode, drag moves around the minimap; angle saved.
+- **Silent Mode**: no party, raid or instance messages. Still sets a WoW AFK message. When enabled during an existing session it also suppresses the comeback.
+- **Group-aware messages**: PARTY, RAID or INSTANCE_CHAT when applicable; no /say or guild spam.
+- **Return button**: one unique reason-specific comeback, only if the session actually announced its departure and silent mode is off.
+- **Reload-safe timer**, SavedVariables settings and draggable window position.
+- No external libraries, browser access, tracking or background activity. This is not an anti-AFK addon.
 
-1. Download this repository as ZIP, then extract it.
-2. Copy the inner **`ForgeAFK`** directory to:
-   `World of Warcraft/_classic_beta_/Interface/AddOns/ForgeAFK/`
-3. Check the folder contains `ForgeAFK.toc`, `Core.lua` and `UI.lua` directly, without another nested folder.
-4. Fully restart the game. Check the addon is enabled in the AddOns menu.
-5. Open the panel with **`/fafk`**. It also opens on the first install.
+## Installation
 
-The beta client also recognises the `ForgeAFK_Forever.toc` variant. Both TOC files are included for ease of installation. The final release's interface version and install path may change.
+The target is WoW Forever beta, using interface version **16001**. The live client may differ.
 
-## Slash commands
+1. Download the repository ZIP from GitHub, then extract it.
+2. Copy only the **ForgeAFK** directory from the extracted folder into your WoW Forever client's \`Interface/AddOns/\` directory, so the full path ends in \`Interface/AddOns/ForgeAFK/\`.
+3. Verify that \`ForgeAFK.toc\`, \`ForgeAFK_Forever.toc\`, \`Core.lua\`, \`UI.lua\` and \`Minimap.lua\` are directly inside that folder, with no extra nested folder.
+4. Restart WoW and enable **Forge AFK - Dad Mode** in the AddOns list.
+5. Type \`/fafk\`. The window also opens on first login.
 
-| Command | Action |
-|---|---|
-| `/fafk` | Toggle the panel |
-| `/fafk kid` | Start Kid Aggro |
-| `/fafk partner` | Start Partner Aggro |
-| `/fafk pet` | Start Pet Emergency |
-| `/fafk toilet` | Start Toilet Raid |
-| `/fafk phone` | Start Phone Aggro |
-| `/fafk snack` | Start Snack Quest |
-| `/fafk doorbell` | Start Doorbell Pull |
-| `/fafk back` | Return to Azeroth |
-| `/fafk help` | Print command help |
-| `/fafk about` | Novyx Forge website |
+Both regular and Forever-style TOC filenames are included; which one the client reads depends on its addon loader.
 
-`/forgeafk` is an alias for `/fafk`.
+## Commands
 
-## Test checklist
+| Command | Description |
+| --- | --- |
+| \`/fafk\` | Toggle the addon window |
+| \`/fafk <reason>\` | Start any reason key from the table above, e.g. \`/fafk tech\` |
+| \`/fafk back\` | Finish AFK and return |
+| \`/fafk silent\` | Toggle Silent Mode |
+| \`/fafk minimap\` | Show or hide minimap icon |
+| \`/fafk help\` | Show help in chat |
+| \`/fafk about\` | Visit Novyx Forge |
+| \`/forgeafk\` | Alias for \`/fafk\` |
 
-- [ ] Addon appears as **Forge AFK - Dad Mode** on the Forever beta AddOns screen.
-- [ ] On first login, the window opens without Lua errors.
-- [ ] `/fafk` toggles the window; dragging and `/reload` preserve position.
-- [ ] All seven reasons update the AFK message and begin the timer.
-- [ ] Solo mode does not post public chat.
-- [ ] Party, raid and instance groups each use the appropriate group channel (subject to game chat restrictions).
-- [ ] `I'M BACK` clears AFK and resets the timer.
-- [ ] `/reload` during an active AFK session retains the timer.
-- [ ] No errors or repeated chat sends in combat.
+### Example
 
-WoW's security and chat rules can restrict sending messages, especially in instances and during combat. The addon does not bypass those restrictions. Testing is required before a CurseForge release.
+**Party departure:** \`[Forge AFK] Toilet raid! Nature called a ready check. BRB.\`
+
+**Comeback:** \`[Forge AFK] Dad survived the Toilet Raid. No loot dropped. Back after 06:42!\`
+
+## Testing
+
+Run \`lua5.1 tests/smoke.lua\` from the repo root. The GitHub workflow also runs Lua syntax checks and mocks the game's UI/chat functions. These tests **cannot replace live client testing**.
+
+The in-game acceptance checklist:
+
+- [ ] Addon loads and displays 12 buttons without Lua errors.
+- [ ] \`/fafk\` opens/closes the panel and buttons set the actual AFK status.
+- [ ] Timer works and survives \`/reload\`.
+- [ ] Each departure/callback uses its matching joke and elapsed time.
+- [ ] Silent Mode prevents all group announcements, including comebacks.
+- [ ] No group chat traffic while solo.
+- [ ] Party/raid/instance chat modes work under Forever's chat restrictions.
+- [ ] Minimap left/right click, drag and hide/restore work.
+- [ ] No errors during combat, logout, reload, or low resolution.
 
 ## Distribution
 
-This repository is the source-code home. Public addon releases and updates will go through **CurseForge**. [Novyx Forge](https://novyxforge.com/) is the project showcase, not an alternative addon download host.
+**GitHub** is the source code repo. Public addon downloads and updates will eventually be handled **only through CurseForge** after in-game testing. The [Novyx Forge](https://wow.novyxforge.com/) website is the showcase and documentation hub.
 
 ## License
 
-MIT - see [LICENSE](../LICENSE).
+MIT. See [LICENSE](LICENSE).
