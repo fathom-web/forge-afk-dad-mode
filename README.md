@@ -4,7 +4,7 @@
 
 A lightweight, deliberately ridiculous **World of Warcraft: Forever** addon for busy dads, gamers and every parent interrupted by a real-life boss fight. Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
 
-**Current build: v1.0.0-beta.1.** The files are in the repository, but in-game compatibility remains to be tested before a CurseForge release.
+**Current build: v1.0.0-beta.2.** The files are in the repository, but in-game compatibility remains to be tested before a CurseForge release.
 
 ## Your 12 real-life boss fights
 
@@ -25,6 +25,20 @@ A lightweight, deliberately ridiculous **World of Warcraft: Forever** addon for 
 
 Every reason starts an AFK timer and sets an in-game AFK message. When grouped and not silent, the addon attempts one group announcement. The **I'M BACK** button clears AFK and attempts a reason-specific comeback including elapsed time.
 
+## Automatic whisper replies (native WoW feature)
+
+**Yes!** When you click one of the twelve AFK reasons, Forge AFK sets WoW's real AFK status with a custom, branded message. WoW itself automatically responds to incoming **in-game whispers** with that message while you are flagged AFK. No separate whisper listener is needed.
+
+For example, after choosing **TOILET RAID**, a whisper will receive this native AFK reply:
+
+> [Forge AFK] TOILET RAID! Nature called a ready check. Dad is fighting a real-life boss. BRB!
+
+Each AFK reason has its own one-line reply. Press **I'M BACK** to clear your native AFK status and its reply.
+
+**Silent Mode only mutes outgoing party/raid/instance announcements.** It intentionally does not disable the game's automatic AFK response to incoming whispers.
+
+Important: a game setting that automatically clears AFK when you move or perform an action can end the native auto-reply, even if the addon timer is still running. Battle.net whispers may behave differently. WoW Forever in-game whisper behavior needs to be verified during live testing.
+
 ## Features
 
 - **12 large, one-click buttons**, displayed as a compact 2 × 6 grid.
@@ -32,6 +46,7 @@ Every reason starts an AFK timer and sets an in-game AFK message. When grouped a
 - **Silent Mode**: no party, raid or instance messages. Still sets a WoW AFK message. When enabled during an existing session it also suppresses the comeback.
 - **Group-aware messages**: PARTY, RAID or INSTANCE_CHAT when applicable; no /say or guild spam.
 - **Return button**: one unique reason-specific comeback, only if the session actually announced its departure and silent mode is off.
+- **Native whisper auto-replies**: one branded message per reason, sent automatically by WoW when AFK.
 - **Reload-safe timer**, SavedVariables settings and draggable window position.
 - No external libraries, browser access, tracking or background activity. This is not an anti-AFK addon.
 
@@ -79,6 +94,9 @@ The in-game acceptance checklist:
 - [ ] Silent Mode prevents all group announcements, including comebacks.
 - [ ] No group chat traffic while solo.
 - [ ] Party/raid/instance chat modes work under Forever's chat restrictions.
+- [ ] Have a second player whisper while **Toilet Raid** is active; confirm WoW's automatic AFK reply uses the themed text.
+- [ ] Repeat with **Silent Mode** on: no group announcement but native AFK whisper reply still appears.
+- [ ] Press **I'M BACK** and confirm the custom reply stops.
 - [ ] Minimap left/right click, drag and hide/restore work.
 - [ ] No errors during combat, logout, reload, or low resolution.
 
