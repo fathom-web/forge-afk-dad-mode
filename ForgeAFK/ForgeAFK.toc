@@ -1,0 +1,10 @@
+## Interface: 16001
+## Title: Forge AFK - Dad Mode
+## Notes: One-click real-life aggro excuses and an AFK timer. Azeroth can wait.
+## Author: Novyx Forge
+## Version: 0.1.0-alpha
+## SavedVariables: ForgeAFKDB
+## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
+
+Core.lua
+UI.lua
