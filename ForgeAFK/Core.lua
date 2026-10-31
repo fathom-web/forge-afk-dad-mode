@@ -2,7 +2,7 @@ local addonName, ns = ...
 local ForgeAFK = {}
 ns.ForgeAFK = ForgeAFK
 
-ForgeAFK.version = "0.1.0-alpha"
+ForgeAFK.version = "0.1.1-alpha"
 ForgeAFK.reasons = {
     kid = {
         name = "KID AGGRO",
@@ -22,6 +22,18 @@ ForgeAFK.reasons = {
         afk = "Pet emergency. No hearthstone available. Back soon.",
         group = "[Forge AFK] Pet emergency! No hearthstone available. BRB.",
     },
+    toilet = {
+        name = "TOILET RAID",
+        hint = "Nature calls. No ready check.",
+        afk = "Toilet raid! Nature called. Back soon.",
+        group = "[Forge AFK] Toilet raid! Nature called a ready check. BRB.",
+    },
+    phone = {
+        name = "PHONE AGGRO",
+        hint = "Incoming real-life call",
+        afk = "Phone aggro! Incoming real-life call. Back soon.",
+        group = "[Forge AFK] Phone aggro! Can't silence this boss. BRB.",
+    },
     snack = {
         name = "SNACK QUEST",
         hint = "Restocking supplies",
@@ -35,7 +47,7 @@ ForgeAFK.reasons = {
         group = "[Forge AFK] Someone pulled the doorbell boss. BRB.",
     },
 }
-ForgeAFK.reasonOrder = { "kid", "partner", "pet", "snack", "doorbell" }
+ForgeAFK.reasonOrder = { "kid", "partner", "pet", "toilet", "phone", "snack", "doorbell" }
 
 function ForgeAFK:Print(message)
     local line = "|cffd5af67Forge AFK|r  " .. tostring(message)
@@ -175,7 +187,7 @@ function ForgeAFK:Initialize()
         elseif ForgeAFK.reasons[command] then
             ForgeAFK:Activate(command)
         elseif command == "help" then
-            ForgeAFK:Print("/fafk - panel  |  /fafk kid, partner, pet, snack, doorbell  |  /fafk back")
+            ForgeAFK:Print("/fafk - panel  |  /fafk kid, partner, pet, toilet, phone, snack, doorbell  |  /fafk back")
         elseif command == "about" then
             ForgeAFK:Print("Made by Novyx Forge  -  https://wow.novyxforge.com")
         else
