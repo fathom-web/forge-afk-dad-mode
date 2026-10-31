@@ -77,7 +77,7 @@ assert(loadfile("ForgeAFK/UI.lua"))("ForgeAFK", ns)
 assert(loadfile("ForgeAFK/Minimap.lua"))("ForgeAFK", ns)
 
 local afk = assert(ns.ForgeAFK)
-assert(afk.version == "1.0.0-beta.1")
+assert(afk.version == "1.0.0-beta.2")
 assert(#afk.reasonOrder == 12, "Exactly twelve reasons expected")
 
 -- First-load lifecycle is triggered explicitly just like WoW's addon event.
@@ -86,6 +86,7 @@ afk:Initialize()
 assert(afk.frame:IsShown(), "First launch must show UI")
 assert(afk.minimapButton and afk.minimapButton:IsShown(), "Minimap button should be visible")
 assert(afk.reasonButtons and afk.reasonButtons.tech, "Missing Tech Support button")
+assert(afk.whisperInfo and afk.whisperInfo.text, "Missing whisper auto-reply indicator")
 assert(not afk.db.silent)
 
 -- All 12 reasons must provide unique return texts and emit exactly one
@@ -95,6 +96,8 @@ inParty = true
 for _, id in ipairs(afk.reasonOrder) do
     local reason = assert(afk.reasons[id], "Missing reason: " .. id)
     assert(reason.name and reason.hint and reason.afk and reason.group and reason.back)
+    assert(reason.afk:sub(1, 11) == "[Forge AFK]", "Native AFK auto-reply must use our branding")
+    assert(#reason.afk <= 255, "AFK reply exceeds chat limit")
     assert(not uniqueComebacks[reason.back], "Duplicate comeback: " .. id)
     uniqueComebacks[reason.back] = true
     assert(afk.reasonButtons[id], "Missing UI button: " .. id)
@@ -102,8 +105,11 @@ for _, id in ipairs(afk.reasonOrder) do
     messages = {}
     afk:Activate(id)
     assert(afk.db.session.active)
+    assert(afk.whisperInfo.text:find("auto-replies", 1, true), "Whisper status should activate")
     assert(#messages == 2, "Departure must be one AFK and one group message: " .. id)
     assert(messages[1].channel == "AFK" and messages[2].channel == "PARTY")
+    assert(messages[1].body == reason.afk, "AFK auto-reply message mismatch")
+    assert(messages[2].channel ~= "WHISPER", "Do not send a duplicate direct whisper")
     now = now + 42
     afk:UpdatePanel()
     assert(afk.timerText.text == "00:42", "Timer display was not updated")
@@ -128,6 +134,8 @@ now = now + 3
 afk:Return()
 assert(#messages == 2)
 assert(messages[1].channel == "AFK" and messages[2].channel == "AFK")
+assert(messages[1].body == afk.reasons.toilet.afk,
+    "Silent Mode must preserve WoW's native AFK auto-reply")
 afk:SetSilent(false)
 
 -- If silent is enabled mid-session, suppress the comeback.
@@ -184,4 +192,4 @@ afk.minimapButton.scripts.OnUpdate(afk.minimapButton)
 afk.minimapButton.scripts.OnDragStop(afk.minimapButton)
 assert(type(afk.db.minimapAngle) == "number", "Minimap drag must save angle")
 
-print("Forge AFK Dad Mode: 12 reasons, UI, chat, minimap and silent-mode smoke tests passed.")
+print("Forge AFK Dad Mode: 12 native whisper replies, UI, chat, minimap and silent-mode smoke tests passed.")
