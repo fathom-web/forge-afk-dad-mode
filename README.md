@@ -8,11 +8,11 @@ Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
 
 ## Version
 
-**0.1.0-alpha** - first playable build for WoW Forever beta (interface `16001`). In-game testing is still required.
+**0.1.1-alpha** - first playable build for WoW Forever beta (interface `16001`). In-game testing is still required.
 
 ## What it does
 
-- Five one-click reasons: **Kid Aggro**, **Partner Aggro**, **Pet Emergency**, **Snack Quest**, and **Doorbell Pull**.
+- Seven one-click reasons: **Kid Aggro**, **Partner Aggro**, **Pet Emergency**, **Toilet Raid**, **Phone Aggro**, **Snack Quest**, and **Doorbell Pull**.
 - Sets your actual in-game AFK message using the modern `C_ChatInfo.SendChatMessage` API.
 - Posts a short, fun message to **instance, raid or party chat** when you're grouped, when the client permits it. Does **not** broadcast to /say or /guild while solo.
 - Starts a local elapsed-time timer that persists through `/reload`.
@@ -39,6 +39,8 @@ The beta client also recognises the `ForgeAFK_Forever.toc` variant. Both TOC fil
 | `/fafk kid` | Start Kid Aggro |
 | `/fafk partner` | Start Partner Aggro |
 | `/fafk pet` | Start Pet Emergency |
+| `/fafk toilet` | Start Toilet Raid |
+| `/fafk phone` | Start Phone Aggro |
 | `/fafk snack` | Start Snack Quest |
 | `/fafk doorbell` | Start Doorbell Pull |
 | `/fafk back` | Return to Azeroth |
@@ -52,7 +54,7 @@ The beta client also recognises the `ForgeAFK_Forever.toc` variant. Both TOC fil
 - [ ] Addon appears as **Forge AFK - Dad Mode** on the Forever beta AddOns screen.
 - [ ] On first login, the window opens without Lua errors.
 - [ ] `/fafk` toggles the window; dragging and `/reload` preserve position.
-- [ ] All five reasons update the AFK message and begin the timer.
+- [ ] All seven reasons update the AFK message and begin the timer.
 - [ ] Solo mode does not post public chat.
 - [ ] Party, raid and instance groups each use the appropriate group channel (subject to game chat restrictions).
 - [ ] `I'M BACK` clears AFK and resets the timer.
