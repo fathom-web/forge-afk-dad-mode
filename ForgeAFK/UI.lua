@@ -132,6 +132,11 @@ function ForgeAFK:CreateUI()
     backLabel:SetTextColor(1, 0.88, 0.67)
     back:SetScript("OnClick", function() ForgeAFK:Return() end)
 
+    -- WoW's native AFK status provides the automatic whisper reply.
+    local whisperInfo = Text(panel, "GameFontHighlightSmall",
+        "WHISPERS: WoW replies automatically while AFK", 20, -563)
+    whisperInfo:SetTextColor(0.79, 0.69, 0.49)
+
     local footer = Text(panel, "GameFontHighlightSmall",
         "NOVYX FORGE  |  /fafk  |  v" .. self.version .. "  |  R-click minimap: silent", 20, -582)
     footer:SetTextColor(0.55, 0.55, 0.52)
@@ -149,6 +154,7 @@ function ForgeAFK:CreateUI()
     self.statusText = status
     self.backButton = back
     self.silentLabel = silentLabel
+    self.whisperInfo = whisperInfo
     self.reasonButtons = buttons
     panel:Hide()
 end
@@ -168,6 +174,9 @@ function ForgeAFK:UpdatePanel()
     self.silentLabel:SetText(self.db.silent
         and "SILENT MODE: ON  -  No group announcements"
         or "SILENT MODE: OFF  -  Announce in party or raid")
+    self.whisperInfo:SetText(active
+        and "WHISPERS: WoW auto-replies with your selected AFK reason"
+        or "WHISPERS: WoW auto-reply activates when you go AFK")
 
     for _, button in pairs(self.reasonButtons) do
         button:SetEnabled(not active)
