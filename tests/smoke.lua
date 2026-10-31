@@ -22,7 +22,7 @@ SlashCmdList = {}
 
 local Widget = {}
 Widget.__index = function(_, key)
-    return function() end
+    return rawget(Widget, key) or function() end
 end
 function Widget:SetScript(event, handler)
     self.scripts = self.scripts or {}
@@ -77,10 +77,7 @@ assert(afk.version == "1.0.0-beta.1")
 assert(#afk.reasonOrder == 12, "Exactly twelve reasons expected")
 
 -- First-load lifecycle is triggered explicitly just like WoW's addon event.
-local eventFrame = CreateFrame("Frame")
--- The last CreateFrame from Core.lua was the ADDON_LOADED listener;
--- capture it by replacing CreateFrame BEFORE loadfile in normal runs.
--- In tests we invoke the same initialization function directly instead.
+-- Initialize using the same method called by the ADDON_LOADED listener.
 afk:Initialize()
 assert(afk.frame:IsShown(), "First launch must show UI")
 assert(afk.minimapButton and afk.minimapButton:IsShown(), "Minimap button should be visible")
