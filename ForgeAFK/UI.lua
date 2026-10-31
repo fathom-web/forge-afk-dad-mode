@@ -29,7 +29,8 @@ end
 
 function ForgeAFK:CreateUI()
     local panel = CreateFrame("Frame", "ForgeAFKPanel", UIParent, "BackdropTemplate")
-    panel:SetSize(350, 452)
+    local extraHeight = math.max(0, #self.reasonOrder - 5) * 47
+    panel:SetSize(350, 452 + extraHeight)
     panel:SetFrameStrata("DIALOG")
     panel:SetClampedToScreen(true)
     panel:SetMovable(true)
@@ -96,16 +97,16 @@ function ForgeAFK:CreateUI()
         reasonButtons[id] = button
     end
 
-    local timerLabel = Font(panel, "GameFontNormalSmall", "REAL-LIFE AGGRO TIMER", 20, -327)
+    local timerLabel = Font(panel, "GameFontNormalSmall", "REAL-LIFE AGGRO TIMER", 20, -327 - extraHeight)
     timerLabel:SetTextColor(0.82, 0.66, 0.38)
-    local timer = Font(panel, "GameFontNormalLarge", "00:00", 221, -323)
+    local timer = Font(panel, "GameFontNormalLarge", "00:00", 221, -323 - extraHeight)
     timer:SetTextColor(1, 1, 1)
 
-    local status = Font(panel, "GameFontHighlightSmall", "Ready for real-life aggro.", 20, -352)
+    local status = Font(panel, "GameFontHighlightSmall", "Ready for real-life aggro.", 20, -352 - extraHeight)
     status:SetTextColor(unpack(COLORS.muted))
 
     local back = CreateFrame("Button", nil, panel, "BackdropTemplate")
-    back:SetPoint("TOPLEFT", panel, "TOPLEFT", 18, -376)
+    back:SetPoint("TOPLEFT", panel, "TOPLEFT", 18, -376 - extraHeight)
     back:SetSize(314, 38)
     ApplyBackdrop(back, COLORS.hover)
     back:SetBackdropBorderColor(0.82, 0.66, 0.38, 1)
@@ -117,7 +118,7 @@ function ForgeAFK:CreateUI()
         ForgeAFK:Return()
     end)
 
-    local footer = Font(panel, "GameFontHighlightSmall", "Novyx Forge  |  /fafk  |  v" .. self.version, 20, -426)
+    local footer = Font(panel, "GameFontHighlightSmall", "Novyx Forge  |  /fafk  |  v" .. self.version, 20, -426 - extraHeight)
     footer:SetTextColor(0.51, 0.52, 0.55)
 
     panel:SetScript("OnUpdate", function(frame, elapsed)
