@@ -46,6 +46,13 @@ ForgeAFK.reasons = {
         group = "[Forge AFK] Snack quest! Restocking supplies. BRB.",
         back = "Snack quest complete. Inventory replenished.",
     },
+    tech = {
+        name = "DAD TECH SUPPORT",
+        hint = "Family Wi-Fi boss fight",
+        afk = "Dad tech support! Family Wi-Fi is down. Back soon.",
+        group = "[Forge AFK] Family Wi-Fi is down. Dad has been summoned. BRB.",
+        back = "Wi-Fi boss defeated. Family reputation restored +100.",
+    },
     sleep = {
         name = "SLEEP DEBUFF",
         hint = "Dad fell asleep. Again.",
@@ -82,7 +89,7 @@ ForgeAFK.reasons = {
         back = "Doorbell boss handled. Unexpected NPC despawned.",
     },
 }
-ForgeAFK.reasonOrder = { "kid", "partner", "pet", "toilet", "phone", "snack", "doorbell", "sleep", "work", "coffee", "delivery" }
+ForgeAFK.reasonOrder = { "kid", "partner", "pet", "toilet", "phone", "snack", "doorbell", "sleep", "work", "coffee", "delivery", "tech" }
 
 function ForgeAFK:Print(message)
     local line = "|cffd5af67Forge AFK|r  " .. tostring(message)
