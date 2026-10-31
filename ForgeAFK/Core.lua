@@ -2,89 +2,89 @@ local addonName, ns = ...
 local ForgeAFK = {}
 ns.ForgeAFK = ForgeAFK
 
-ForgeAFK.version = "1.0.0-beta.1"
+ForgeAFK.version = "1.0.0-beta.2"
 ForgeAFK.reasons = {
     kid = {
         name = "KID AGGRO",
         hint = "Real-life boss encounter",
-        afk = "Kid aggro! Real-life boss fight. Back soon.",
+        afk = "[Forge AFK] KID AGGRO! Tiny raid boss needs Dad. Bedtime encounter in progress. BRB!",
         group = "[Forge AFK] Kid aggro! Real-life boss fight. BRB.",
         back = "Dad survived Kid Aggro. Bedtime boss defeated.",
     },
     partner = {
         name = "PARTNER AGGRO",
         hint = "This raid has priority",
-        afk = "Partner aggro. This raid has priority. Back soon.",
+        afk = "[Forge AFK] PARTNER AGGRO! Real-life raid leader called. This encounter has priority. BRB!",
         group = "[Forge AFK] Partner aggro. This raid has priority. BRB.",
         back = "Partner raid cleared. Relationship reputation +10.",
     },
     pet = {
         name = "PET EMERGENCY",
         hint = "No hearthstone available",
-        afk = "Pet emergency. No hearthstone available. Back soon.",
+        afk = "[Forge AFK] PET EMERGENCY! Four-legged companion needs an escort quest. BRB!",
         group = "[Forge AFK] Pet emergency! No hearthstone available. BRB.",
         back = "Pet escort quest complete. Paw patrol survived.",
     },
     toilet = {
         name = "TOILET RAID",
         hint = "Nature calls. No ready check.",
-        afk = "Toilet raid! Nature called. Back soon.",
+        afk = "[Forge AFK] TOILET RAID! Nature called a ready check. Dad is fighting a real-life boss. BRB!",
         group = "[Forge AFK] Toilet raid! Nature called a ready check. BRB.",
         back = "Dad survived the Toilet Raid. No loot dropped.",
     },
     phone = {
         name = "PHONE AGGRO",
         hint = "Incoming real-life call",
-        afk = "Phone aggro! Incoming real-life call. Back soon.",
+        afk = "[Forge AFK] PHONE AGGRO! Incoming real-life call. Can't put this boss on hold. BRB!",
         group = "[Forge AFK] Phone aggro! Can't silence this boss. BRB.",
         back = "Phone boss defeated. Battery -5. Sanity -20.",
     },
     snack = {
         name = "SNACK QUEST",
         hint = "Restocking supplies",
-        afk = "Snack quest: restocking supplies. Back soon.",
+        afk = "[Forge AFK] SNACK QUEST! Restocking food buffs for the next encounter. BRB!",
         group = "[Forge AFK] Snack quest! Restocking supplies. BRB.",
         back = "Snack quest complete. Inventory replenished.",
     },
     tech = {
         name = "DAD TECH SUPPORT",
         hint = "Family Wi-Fi boss fight",
-        afk = "Dad tech support! Family Wi-Fi is down. Back soon.",
+        afk = "[Forge AFK] DAD TECH SUPPORT! Family Wi-Fi is down. Dad has been summoned. BRB!",
         group = "[Forge AFK] Family Wi-Fi is down. Dad has been summoned. BRB.",
         back = "Wi-Fi boss defeated. Family reputation restored +100.",
     },
     sleep = {
         name = "SLEEP DEBUFF",
         hint = "Dad fell asleep. Again.",
-        afk = "Sleep debuff. Brief recharge needed.",
+        afk = "[Forge AFK] SLEEP DEBUFF! Dad has fallen asleep at the keyboard. Again. BRB!",
         group = "[Forge AFK] Dad fell asleep at the keyboard. Again. BRB.",
         back = "Sleep debuff dispelled. Dad is operational.",
     },
     work = {
         name = "WORK AGGRO",
         hint = "Employer has entered combat",
-        afk = "Work aggro! Real-life boss needs attention.",
+        afk = "[Forge AFK] WORK AGGRO! Real-life employer entered combat. BRB!",
         group = "[Forge AFK] Real-life employer has entered combat. BRB.",
         back = "Work aggro evaded. Back to the real endgame.",
     },
     coffee = {
         name = "COFFEE REFILL",
         hint = "Brewing a mana potion",
-        afk = "Coffee refill. Brewing a fresh mana potion.",
+        afk = "[Forge AFK] COFFEE REFILL! Mana depleted. Brewing a fresh potion. BRB!",
         group = "[Forge AFK] Mana depleted. Brewing a fresh potion. BRB.",
         back = "Coffee potion consumed. Mana restored +100.",
     },
     delivery = {
         name = "DELIVERY BOSS",
         hint = "Legendary loot at the door",
-        afk = "Delivery boss! Package at the door.",
+        afk = "[Forge AFK] DELIVERY BOSS! Legendary loot at the door. BRB!",
         group = "[Forge AFK] Legendary loot delivery at the front door. BRB.",
         back = "Delivery boss down. Package looted.",
     },
     doorbell = {
         name = "DOORBELL PULL",
         hint = "Unexpected visitor encounter",
-        afk = "Doorbell boss pulled. Back soon.",
+        afk = "[Forge AFK] DOORBELL PULL! Unexpected NPC at the front door. BRB!",
         group = "[Forge AFK] Someone pulled the doorbell boss. BRB.",
         back = "Doorbell boss handled. Unexpected NPC despawned.",
     },
@@ -181,7 +181,10 @@ function ForgeAFK:Activate(id)
     }
     self.db.session = session
 
-    -- A user action sets the WoW AFK message; no anti-AFK automation.
+    -- Blizzard automatically responds to incoming whispers with this custom
+    -- AFK message while the player is AFK. Never send our own WHISPER here:
+    -- doing so would cause duplicate replies and unnecessary chat spam.
+    -- Silent Mode suppresses group announcements, not WoW's native reply.
     self:SendChat(reason.afk, "AFK")
     local channel = self:GroupChannel()
     if channel and not self.db.silent then
