@@ -25,8 +25,12 @@ Widget.__index = function(_, key)
     return rawget(Widget, key) or function() end
 end
 function Widget:SetScript(event, handler)
-    self.scripts = self.scripts or {}
-    self.scripts[event] = handler
+    local scripts = rawget(self, "scripts")
+    if not scripts then
+        scripts = {}
+        rawset(self, "scripts", scripts)
+    end
+    scripts[event] = handler
 end
 function Widget:CreateTexture()
     return setmetatable({}, Widget)
