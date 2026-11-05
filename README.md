@@ -4,7 +4,7 @@
 
 A lightweight, deliberately ridiculous **World of Warcraft: Forever** addon for busy dads, gamers and every parent interrupted by a real-life boss fight. Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
 
-**Current build: v1.0.1-beta.1 (test build).** The native AFK whisper behavior has been confirmed in WoW Forever. The updated /afk shortcut must be checked in-game before publishing as a stable CurseForge Release.
+**Current version: v1.0.1 — Release.** WoW Forever players have successfully verified the native AFK whisper replies and the new `/afk` menu shortcut in-game. Remaining optional behavior can be validated through continued player feedback.
 
 ## Your 12 real-life boss fights
 
@@ -52,9 +52,9 @@ Important: a game setting that automatically clears AFK when you move or perform
 
 ## Installation
 
-The target is WoW Forever beta, using interface version **16001**. The live client may differ.
+The target is WoW Forever, using interface version **16001**.
 
-1. Download the repository ZIP from GitHub, then extract it.
+1. Install via CurseForge once the Release file has been approved and published; for manual installation, extract the release ZIP.
 2. Copy only the **ForgeAFK** directory from the extracted folder into your WoW Forever client's \`Interface/AddOns/\` directory, so the full path ends in \`Interface/AddOns/ForgeAFK/\`.
 3. Verify that \`ForgeAFK.toc\`, \`ForgeAFK_Forever.toc\`, \`Core.lua\`, \`UI.lua\` and \`Minimap.lua\` are directly inside that folder, with no extra nested folder.
 4. Restart WoW and enable **Forge AFK - Dad Mode** in the AddOns list.
@@ -87,7 +87,7 @@ Run \`lua5.1 tests/smoke.lua\` from the repo root. The GitHub workflow also runs
 
 The in-game acceptance checklist:
 
-- [ ] Addon loads and displays 12 buttons without Lua errors.
+- [x] Addon loads and displays 12 buttons in WoW Forever.
 - [ ] \`/fafk\` opens/closes the panel and buttons set the actual AFK status.
 - [ ] Timer works and survives \`/reload\`.
 - [ ] Each departure/callback uses its matching joke and elapsed time.
@@ -102,7 +102,7 @@ The in-game acceptance checklist:
 
 ## Distribution
 
-**GitHub** is the source code repo. Public addon downloads and updates will eventually be handled **only through CurseForge** after in-game testing. The [Novyx Forge](https://wow.novyxforge.com/) website is the showcase and documentation hub.
+**GitHub** is the source code repository. Public addon downloads and updates are distributed **only through CurseForge** after its Release upload is approved. The [Novyx Forge](https://wow.novyxforge.com/) website is the showcase and documentation hub.
 
 ## License
 
