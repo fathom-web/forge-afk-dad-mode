@@ -2,7 +2,7 @@ local addonName, ns = ...
 local ForgeAFK = {}
 ns.ForgeAFK = ForgeAFK
 
-ForgeAFK.version = "1.0.1-beta.1"
+ForgeAFK.version = "1.0.1"
 ForgeAFK.reasons = {
     kid = {
         name = "KID AGGRO",
