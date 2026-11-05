@@ -82,7 +82,7 @@ assert(loadfile("ForgeAFK/UI.lua"))("ForgeAFK", ns)
 assert(loadfile("ForgeAFK/Minimap.lua"))("ForgeAFK", ns)
 
 local afk = assert(ns.ForgeAFK)
-assert(afk.version == "1.0.1-beta.1")
+assert(afk.version == "1.0.1")
 assert(#afk.reasonOrder == 12, "Exactly twelve reasons expected")
 
 -- First-load lifecycle is triggered explicitly just like WoW's addon event.
