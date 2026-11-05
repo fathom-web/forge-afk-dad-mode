@@ -18,7 +18,12 @@ C_ChatInfo = { SendChatMessage = function(message, channel)
 end }
 DEFAULT_CHAT_FRAME = { AddMessage = function() end }
 LE_PARTY_CATEGORY_INSTANCE = 2
-SlashCmdList = {}
+local nativeAFKMessages = {}
+SLASH_CHAT_AFK1 = "/afk"
+SlashCmdList = { CHAT_AFK = function(message)
+    nativeAFKMessages[#nativeAFKMessages + 1] = message
+end }
+hash_SlashCmdList = { ["/AFK"] = true }
 
 local Widget = {}
 Widget.__index = function(_, key)
@@ -77,7 +82,7 @@ assert(loadfile("ForgeAFK/UI.lua"))("ForgeAFK", ns)
 assert(loadfile("ForgeAFK/Minimap.lua"))("ForgeAFK", ns)
 
 local afk = assert(ns.ForgeAFK)
-assert(afk.version == "1.0.0-beta.2")
+assert(afk.version == "1.0.0")
 assert(#afk.reasonOrder == 12, "Exactly twelve reasons expected")
 
 -- First-load lifecycle is triggered explicitly just like WoW's addon event.
@@ -88,6 +93,18 @@ assert(afk.minimapButton and afk.minimapButton:IsShown(), "Minimap button should
 assert(afk.reasonButtons and afk.reasonButtons.tech, "Missing Tech Support button")
 assert(afk.whisperInfo and afk.whisperInfo.text, "Missing whisper auto-reply indicator")
 assert(not afk.db.silent)
+
+
+-- Native /afk opens our panel without toggling AFK; /afk custom text retains
+-- Blizzard's original behavior and the cached handler is invalidated.
+afk.frame:Hide()
+SlashCmdList.CHAT_AFK("")
+assert(afk.frame:IsShown(), "Bare /afk must open Dad Mode")
+assert(#nativeAFKMessages == 0, "Bare /afk must not set native AFK")
+assert(hash_SlashCmdList["/AFK"] == nil, "Stale chat slash-command cache")
+SlashCmdList.CHAT_AFK("Custom away text")
+assert(#nativeAFKMessages == 1 and nativeAFKMessages[1] == "Custom away text",
+    "/afk with a message must preserve native behavior")
 
 -- All 12 reasons must provide unique return texts and emit exactly one
 -- AFK + one party announcement on start and return when non-silent.
