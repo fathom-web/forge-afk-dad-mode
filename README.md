@@ -4,7 +4,7 @@
 
 A lightweight, deliberately ridiculous **World of Warcraft: Forever** addon for busy dads, gamers and every parent interrupted by a real-life boss fight. Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
 
-**Current build: v1.0.0-beta.2.** The files are in the repository, but in-game compatibility remains to be tested before a CurseForge release.
+**Current build: v1.0.0 (Release candidate).** The native AFK whisper behavior has been confirmed in WoW Forever. The new /afk shortcut must be checked in-game before publishing as a stable CurseForge Release.
 
 ## Your 12 real-life boss fights
 
@@ -94,7 +94,7 @@ The in-game acceptance checklist:
 - [ ] Silent Mode prevents all group announcements, including comebacks.
 - [ ] No group chat traffic while solo.
 - [ ] Party/raid/instance chat modes work under Forever's chat restrictions.
-- [ ] Have a second player whisper while **Toilet Raid** is active; confirm WoW's automatic AFK reply uses the themed text.
+- [x] Have a second player whisper while AFK; the native reply with the themed WORK AGGRO text was confirmed in-game.
 - [ ] Repeat with **Silent Mode** on: no group announcement but native AFK whisper reply still appears.
 - [ ] Press **I'M BACK** and confirm the custom reply stops.
 - [ ] Minimap left/right click, drag and hide/restore work.
