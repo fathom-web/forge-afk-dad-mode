@@ -22,18 +22,18 @@ jobs:
           for f in ForgeAFK/ForgeAFK.toc ForgeAFK/ForgeAFK_Forever.toc ForgeAFK/Core.lua ForgeAFK/UI.lua ForgeAFK/Minimap.lua; do
             test -s "$f"
           done
-          grep -q '## Version: 1.0.0' ForgeAFK/ForgeAFK.toc
+          grep -q '## Version: 1.0.1-beta.1' ForgeAFK/ForgeAFK.toc
       - name: Create CurseForge package
         run: |
           set -euo pipefail
-          zip -9 -r FORGE_AFK_Dad_Mode_1.0.0.zip ForgeAFK \
+          zip -9 -r FORGE_AFK_Dad_Mode_1.0.1-beta.1.zip ForgeAFK \
             -x '*/.DS_Store' '*__MACOSX*'
-          unzip -t FORGE_AFK_Dad_Mode_1.0.0.zip
-          unzip -Z1 FORGE_AFK_Dad_Mode_1.0.0.zip
+          unzip -t FORGE_AFK_Dad_Mode_1.0.1-beta.1.zip
+          unzip -Z1 FORGE_AFK_Dad_Mode_1.0.1-beta.1.zip
       - name: Save upload ZIP as maintainer artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FORGE_AFK_Dad_Mode_1.0.0_CurseForge_upload
-          path: FORGE_AFK_Dad_Mode_1.0.0.zip
+          name: FORGE_AFK_Dad_Mode_1.0.1-beta.1_CurseForge_upload
+          path: FORGE_AFK_Dad_Mode_1.0.1-beta.1.zip
           retention-days: 7
           if-no-files-found: error
