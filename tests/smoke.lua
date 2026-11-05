@@ -23,7 +23,7 @@ SLASH_CHAT_AFK1 = "/afk"
 SlashCmdList = { CHAT_AFK = function(message)
     nativeAFKMessages[#nativeAFKMessages + 1] = message
 end }
-hash_SlashCmdList = { ["/AFK"] = true }
+hash_SlashCmdList = { ["/AFK"] = SlashCmdList.CHAT_AFK }
 
 local Widget = {}
 Widget.__index = function(_, key)
@@ -82,7 +82,7 @@ assert(loadfile("ForgeAFK/UI.lua"))("ForgeAFK", ns)
 assert(loadfile("ForgeAFK/Minimap.lua"))("ForgeAFK", ns)
 
 local afk = assert(ns.ForgeAFK)
-assert(afk.version == "1.0.0")
+assert(afk.version == "1.0.1-beta.1")
 assert(#afk.reasonOrder == 12, "Exactly twelve reasons expected")
 
 -- First-load lifecycle is triggered explicitly just like WoW's addon event.
@@ -98,11 +98,15 @@ assert(not afk.db.silent)
 -- Native /afk opens our panel without toggling AFK; /afk custom text retains
 -- Blizzard's original behavior and the cached handler is invalidated.
 afk.frame:Hide()
-SlashCmdList.CHAT_AFK("")
+assert(type(hash_SlashCmdList["/AFK"]) == "function",
+    "Bare /afk must have a cached command handler")
+assert(hash_SlashCmdList["/AFK"] ~= nil and
+    hash_SlashCmdList["/AFK"] == SlashCmdList.CHAT_AFK,
+    "Runtime chat parser must use our handler, not Blizzard's cached handler")
+hash_SlashCmdList["/AFK"]("")
 assert(afk.frame:IsShown(), "Bare /afk must open Dad Mode")
 assert(#nativeAFKMessages == 0, "Bare /afk must not set native AFK")
-assert(hash_SlashCmdList["/AFK"] == nil, "Stale chat slash-command cache")
-SlashCmdList.CHAT_AFK("Custom away text")
+hash_SlashCmdList["/AFK"]("Custom away text")
 assert(#nativeAFKMessages == 1 and nativeAFKMessages[1] == "Custom away text",
     "/afk with a message must preserve native behavior")
 
