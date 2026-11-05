@@ -2,7 +2,7 @@ local addonName, ns = ...
 local ForgeAFK = {}
 ns.ForgeAFK = ForgeAFK
 
-ForgeAFK.version = "1.0.0"
+ForgeAFK.version = "1.0.1-beta.1"
 ForgeAFK.reasons = {
     kid = {
         name = "KID AGGRO",
@@ -239,7 +239,10 @@ function ForgeAFK:Open()
 end
 
 function ForgeAFK:RegisterNativeAFKMenu()
-    local original = SlashCmdList and SlashCmdList.CHAT_AFK
+    -- ChatFrame's runtime uses hash_SlashCmdList directly, not just
+    -- SlashCmdList. Capture the original cached handler before replacing it.
+    local cached = type(hash_SlashCmdList) == "table" and hash_SlashCmdList["/AFK"]
+    local original = cached or (SlashCmdList and SlashCmdList.CHAT_AFK)
     if type(original) == "function" and original ~= self.afkCommandWrapper then
         self.nativeAFKHandler = original
     end
@@ -256,10 +259,11 @@ function ForgeAFK:RegisterNativeAFKMenu()
         end
     end
     SlashCmdList.CHAT_AFK = self.afkCommandWrapper
-    -- An earlier use of /afk might have been cached by the chat parser.
+    -- /afk is parsed via the precompiled hash. Setting SlashCmdList alone
+    -- does not replace an already cached Blizzard handler. Never clear the
+    -- hash entry (that was the bug in 1.0.0): point it to our wrapper.
     if type(hash_SlashCmdList) == "table" then
-        hash_SlashCmdList["/AFK"] = nil
-        hash_SlashCmdList["/afk"] = nil
+        hash_SlashCmdList["/AFK"] = self.afkCommandWrapper
     end
 end
 
