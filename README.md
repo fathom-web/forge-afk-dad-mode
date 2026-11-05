@@ -4,7 +4,7 @@
 
 A lightweight, deliberately ridiculous **World of Warcraft: Forever** addon for busy dads, gamers and every parent interrupted by a real-life boss fight. Made by **[Novyx Forge](https://wow.novyxforge.com/)**.
 
-**Current build: v1.0.0 (Release candidate).** The native AFK whisper behavior has been confirmed in WoW Forever. The new /afk shortcut must be checked in-game before publishing as a stable CurseForge Release.
+**Current build: v1.0.1-beta.1 (test build).** The native AFK whisper behavior has been confirmed in WoW Forever. The updated /afk shortcut must be checked in-game before publishing as a stable CurseForge Release.
 
 ## Your 12 real-life boss fights
 
