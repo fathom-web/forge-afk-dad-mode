@@ -2,7 +2,7 @@
 ## Title: Forge AFK - Dad Mode
 ## Notes: Real-life aggro, hilarious comeback messages, Silent Mode and a minimap button.
 ## Author: Novyx Forge
-## Version: 1.0.1-beta.1
+## Version: 1.0.1
 ## SavedVariables: ForgeAFKDB
 ## IconTexture: Interface\Icons\INV_Misc_PocketWatch_01
 ## X-Website: https://wow.novyxforge.com
