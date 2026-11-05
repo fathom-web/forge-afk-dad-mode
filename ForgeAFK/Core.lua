@@ -2,7 +2,7 @@ local addonName, ns = ...
 local ForgeAFK = {}
 ns.ForgeAFK = ForgeAFK
 
-ForgeAFK.version = "1.0.0-beta.2"
+ForgeAFK.version = "1.0.0"
 ForgeAFK.reasons = {
     kid = {
         name = "KID AGGRO",
@@ -227,6 +227,42 @@ function ForgeAFK:Toggle()
     end
 end
 
+
+-- /afk is Blizzard's existing chat command. In the Forever mainline client
+-- CHAT_AFK is a normal (non-secure) slash handler. Keep the native handler for
+-- messages ("/afk back soon") and only use bare "/afk" to open Dad Mode.
+-- If Blizzard moves the command to secure handling, /fafk remains available.
+function ForgeAFK:Open()
+    if not self.frame then return end
+    self.frame:Show()
+    self:RefreshUI()
+end
+
+function ForgeAFK:RegisterNativeAFKMenu()
+    local original = SlashCmdList and SlashCmdList.CHAT_AFK
+    if type(original) == "function" and original ~= self.afkCommandWrapper then
+        self.nativeAFKHandler = original
+    end
+    if not self.nativeAFKHandler then
+        self:Print("Native /afk shortcut unavailable on this client. Use /fafk.")
+        return
+    end
+    if not self.afkCommandWrapper then
+        self.afkCommandWrapper = function(message, ...)
+            if type(message) == "string" and message:match("%S") then
+                return ForgeAFK.nativeAFKHandler(message, ...)
+            end
+            ForgeAFK:Open()
+        end
+    end
+    SlashCmdList.CHAT_AFK = self.afkCommandWrapper
+    -- An earlier use of /afk might have been cached by the chat parser.
+    if type(hash_SlashCmdList) == "table" then
+        hash_SlashCmdList["/AFK"] = nil
+        hash_SlashCmdList["/afk"] = nil
+    end
+end
+
 function ForgeAFK:RefreshUI()
     if self.UpdatePanel then self:UpdatePanel() end
     if self.UpdateMinimap then self:UpdateMinimap() end
@@ -271,6 +307,8 @@ function ForgeAFK:Initialize()
             ForgeAFK:Toggle()
         end
     end
+
+    self:RegisterNativeAFKMenu()
 
     if not self.db.seenWelcome then
         self.db.seenWelcome = true
